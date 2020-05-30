@@ -1,7 +1,7 @@
-# babel-plugin-transform-inline-functions
+# babel-plugin-inline-functions
 
-[![Build Status](https://travis-ci.org/chocolateboy/babel-plugin-transform-inline-functions.svg)](https://travis-ci.org/chocolateboy/babel-plugin-transform-inline-functions)
-[![NPM Version](https://img.shields.io/npm/v/babel-plugin-transform-inline-functions.svg)](https://www.npmjs.org/package/babel-plugin-transform-inline-functions)
+[![Build Status](https://travis-ci.org/chocolateboy/babel-plugin-inline-functions.svg)](https://travis-ci.org/chocolateboy/babel-plugin-inline-functions)
+[![NPM Version](https://img.shields.io/npm/v/babel-plugin-inline-functions.svg)](https://www.npmjs.org/package/babel-plugin-inline-functions)
 
 <!-- toc -->
 
@@ -31,12 +31,12 @@
 
 # NAME
 
-babel-plugin-transform-inline-functions - a Babel plugin to inline selected functions
+babel-plugin-inline-functions - a Babel plugin to inline selected functions
 
 # INSTALLATION
 
 ```sh
-$ npm install babel-plugin-transform-inline-functions
+$ npm install babel-plugin-inline-functions
 ```
 
 # SYNOPSIS
@@ -289,11 +289,12 @@ inlined when, and the memory/speed tradeoffs, than the developer.
 
 # VERSION
 
-1.0.4
+1.0.0
 
 # AUTHOR
 
 - [Emile Cantin](https://github.com/emilecantin)
+- [chocolateboy](https://github.com/chocolateboy) - maintainer
 
 # COPYRIGHT AND LICENSE
 

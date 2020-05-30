@@ -1,10 +1,11 @@
 {
-    "name": "babel-plugin-transform-inline-functions",
-    "version": "1.0.4",
+    "name": "babel-plugin-inline-functions",
+    "version": "1.0.0",
     "description": "A Babel plugin to inline selected functions",
     "main": "index.js",
-    "repository": "emilecantin/babel-plugin-transform-inline-functions",
+    "repository": "chocolateboy/babel-plugin-inline-functions",
     "author": "Emile Cantin",
+    "contributors": "chocolateboy <chocolate@cpan.org>",
     "license": "ISC",
     "scripts": {
         "doctoc": "markdown-toc --maxdepth 2 --bullets=- -i README.md",
