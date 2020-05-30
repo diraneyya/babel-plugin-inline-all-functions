@@ -1,6 +1,6 @@
 # babel-plugin-transform-inline-functions
 
-[![Build Status](https://travis-ci.org/emilecantin/babel-plugin-transform-inline-functions.svg)](https://travis-ci.org/emilecantin/babel-plugin-transform-inline-functions)
+[![Build Status](https://travis-ci.org/chocolateboy/babel-plugin-transform-inline-functions.svg)](https://travis-ci.org/chocolateboy/babel-plugin-transform-inline-functions)
 [![NPM Version](https://img.shields.io/npm/v/babel-plugin-transform-inline-functions.svg)](https://www.npmjs.org/package/babel-plugin-transform-inline-functions)
 
 <!-- toc -->
