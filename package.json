@@ -1,29 +1,29 @@
 {
-  "name": "babel-plugin-transform-inline-functions",
-  "version": "1.0.4",
-  "description": "A Babel plugin to inline selected functions",
-  "main": "index.js",
-  "repository": "emilecantin/babel-plugin-transform-inline-functions",
-  "author": "Emile Cantin",
-  "license": "ISC",
-  "scripts": {
-    "doctoc": "markdown-toc --maxdepth 2 --bullets=- -i README.md",
-    "test": "ava --verbose ./test/*.js"
-  },
-  "files": [],
-  "dependencies": {},
-  "devDependencies": {
-    "@babel/core": "^7.10.1",
-    "ava": "^3.8.2",
-    "markdown-toc": "^1.2.0",
-    "prettier": "^2.0.5"
-  },
-  "keywords": [
-    "babel",
-    "babel-plugin",
-    "function",
-    "functions",
-    "inline",
-    "inlining"
-  ]
+    "name": "babel-plugin-transform-inline-functions",
+    "version": "1.0.4",
+    "description": "A Babel plugin to inline selected functions",
+    "main": "index.js",
+    "repository": "emilecantin/babel-plugin-transform-inline-functions",
+    "author": "Emile Cantin",
+    "license": "ISC",
+    "scripts": {
+        "doctoc": "markdown-toc --maxdepth 2 --bullets=- -i README.md",
+        "test": "ava --verbose ./test/*.js"
+    },
+    "files": [],
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/core": "^7.10.1",
+        "ava": "^3.8.2",
+        "markdown-toc": "^1.2.0",
+        "prettier": "^2.0.5"
+    },
+    "keywords": [
+        "babel",
+        "babel-plugin",
+        "function",
+        "functions",
+        "inline",
+        "inlining"
+    ]
 }
