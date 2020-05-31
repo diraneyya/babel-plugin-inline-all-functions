@@ -17,16 +17,16 @@ function inline4 (value) {
     return value || 'inline4'
 }
 
-/* PURE */ /* inline */ function inline5 (value) {
+/*#__PURE__*/ /* inline */ function inline5 (value) {
     return value || 'inline5'
 }
 
-/* inline */ /* PURE */ function inline6 (value) {
+/* inline */ /*#__PURE__*/ function inline6 (value) {
     return value || 'inline6'
 }
 
 /* inline */
-/* PURE */
+/*#__PURE__*/
 function inline7 (value) {
     return value || 'inline7'
 }
