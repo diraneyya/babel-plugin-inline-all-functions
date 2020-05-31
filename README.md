@@ -51,7 +51,7 @@ function __INLINE__coalesce (value) {
 const foo = __INLINE__coalesce(options.foo)
 ```
 
-`$ babel --plugins transform-inline-functions test.js`
+`$ babel --plugins inline-functions test.js`
 
 ```javascript
 const foo = options.foo ?? ''
@@ -91,7 +91,7 @@ to false (as it is by default), function declaration comments are not checked.
 ```json
 {
     "plugins": [
-        ["transform-inline-functions", {
+        ["inline-functions", {
             "comment": "inline"
         }]
     ]
@@ -128,7 +128,7 @@ labels are not checked.
 ```json
 {
     "plugins": [
-        ["transform-inline-functions", {
+        ["inline-functions", {
             "label": "inline"
         }]
     ]
@@ -164,7 +164,7 @@ set to false, function names are not checked.
 ```json
 {
     "plugins": [
-        ["transform-inline-functions", {
+        ["inline-functions", {
             "prefix": "__inline__"
         }]
     ]
@@ -199,7 +199,7 @@ Remove the inlined function declaration. If set to false, the declaration is pre
 ```json
 {
     "plugins": [
-        ["transform-inline-functions", {
+        ["inline-functions", {
             "remove": false
         }]
     ]
@@ -236,21 +236,21 @@ const foo = options.foo ?? ''
 
 ```json
 {
-    "plugins": ["transform-inline-functions"]
+    "plugins": ["inline-functions"]
 }
 ```
 
 ## CLI
 
 ```sh
-$ babel --plugins transform-inline-functions script.js
+$ babel --plugins inline-functions script.js
 ```
 
 ## API
 
 ```javascript
 require('@babel/core').transform(code, {
-    plugins: ['transform-inline-functions']
+    plugins: ['inline-functions']
 })
 ```
 
@@ -289,7 +289,7 @@ inlined when, and the memory/speed tradeoffs, than the developer.
 
 # VERSION
 
-1.0.0
+1.0.1
 
 # AUTHOR
 

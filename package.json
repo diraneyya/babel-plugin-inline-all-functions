@@ -1,6 +1,6 @@
 {
     "name": "babel-plugin-inline-functions",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A Babel plugin to inline selected functions",
     "main": "index.js",
     "repository": "chocolateboy/babel-plugin-inline-functions",
