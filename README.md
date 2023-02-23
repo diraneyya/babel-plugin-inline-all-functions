@@ -1,3 +1,5 @@
+This is a forked repo, only changing the default prefix to inline all functions. I created it to use it in my teaching from the BABEL REPL online tool.
+
 # babel-plugin-inline-functions
 
 [![Build Status](https://travis-ci.org/chocolateboy/babel-plugin-inline-functions.svg)](https://travis-ci.org/chocolateboy/babel-plugin-inline-functions)
