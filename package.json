@@ -1,9 +1,9 @@
 {
-    "name": "babel-plugin-inline-functions",
+    "name": "babel-plugin-inline-all-functions",
     "version": "1.0.1",
-    "description": "A Babel plugin to inline selected functions",
+    "description": "A Babel plugin to inline all functions",
     "main": "index.js",
-    "repository": "chocolateboy/babel-plugin-inline-functions",
+    "repository": "diraneyya/babel-plugin-inline-all-functions",
     "author": "Emile Cantin",
     "contributors": "chocolateboy <chocolate@cpan.org>",
     "license": "ISC",
@@ -25,6 +25,7 @@
         "function",
         "functions",
         "inline",
-        "inlining"
+        "inlining",
+        "education"
     ]
 }
