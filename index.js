@@ -1,7 +1,8 @@
 const OPTIONS = {
     comment: false,
     label: false,
-    prefix: '__INLINE__',
+    // Change defaults for use in the REPL
+    prefix: false,
     remove: true,
 }
 
