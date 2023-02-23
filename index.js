@@ -2,7 +2,7 @@ const OPTIONS = {
     comment: false,
     label: false,
     // Change defaults for use in the REPL
-    prefix: false,
+    prefix: "_",
     remove: true,
 }
 
