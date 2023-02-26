@@ -1,113 +1,90 @@
 const OPTIONS = {
-    comment: false,
-    label: false,
-    // Change defaults for use in the REPL
-    prefix: "_",
-    remove: true,
 }
 
-const argumentsInliningVisitor = {
-    Identifier (path) {
-        for (let i = 0; i < this.params.length; i++) {
-            if (path.node.name === this.params[i].name) {
-                if (this.args[i]) {
-                    path.replaceWith(this.args[i])
-                    path.skip() // don't recurse
-                } else {
-                    path.replaceWithSourceString('undefined')
+module.exports = function ({ types : t }, options) {
+  const { } = Object.assign({}, OPTIONS, options);
+      
+  // A dictionary of keys/values where keys are the
+  // function names (identifier) and the values are
+  // objects containing the following properties:
+  // - params: an array of the function params (ast)
+  // - expression: the return expression (ast)
+  // - node: the variable declaration node (ast)
+  let functionCache = {};
+
+  return {
+    visitor: {
+      "Program|BlockStatement": {
+        exit(path) {
+          for (const id in path.scope.bindings) {
+            const binding = path.scope.bindings[id];
+            if (binding.referenced) {
+              const paths = binding.referencePaths;
+              for (let i = 0; i < paths.length; i++) {
+                const path = paths[i];
+                if (path.parent.type === "CallExpression") {
+                  const name = {...path.parent.callee}.name;
+                  if (functionCache[name]) {
+                    const cachedExpression = functionCache[name].expression;
+                    const cachedParams = functionCache[name].params;
+                    const passedArguments = path.parent.arguments;
+                    
+                    path.parentPath.replaceWith(cachedExpression);
+                    path.parentPath.traverse(
+                      {
+                        Identifier (path) {
+                          for (let i = 0; i < this.params.length; i++) {
+                            if (path.node.name === this.params[i].name) {
+                              if (this.args[i]) {
+                                path.replaceWith(this.args[i])
+                                path.skip() // don't recurse
+                              } else {
+                                path.replaceWithSourceString('undefined')
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        args: passedArguments,
+                        params: cachedParams,
+                      }
+                    );
+                  }
                 }
+              }
             }
-        }
-    }
-}
-
-const inlineFunctionVisitor = {
-    CallExpression (path) {
-        if (path.node.callee.name === this.name) {
-            const { params } = this
-            const args = path.node.arguments // grab these before we replace the node
-            const returnStatement = this.types.cloneDeep(this.returnStatement)
-
-            path.replaceWith(returnStatement)
-            path.traverse(argumentsInliningVisitor, { args, params })
-            path.replaceWith(returnStatement.argument)
-        }
-    }
-}
-
-function findComment (node, want) {
-    const comments = node.leadingComments || []
-
-    for (let i = comments.length - 1; i >= 0; --i) {
-        const comment = comments[i]
-
-        if (comment.type !== 'CommentBlock') {
-            break
-        }
-
-        if (comment.value.trim() === want) {
-            return `leadingComments.${i}`
-        }
-    }
-}
-
-function hasSingleStatement (node) {
-    return node.body.body.length === 1
-}
-
-function matchLabel (types, statement, label) {
-    return types.isLabeledStatement(statement) && statement.label.name === label
-}
-
-module.exports = function ({ types }, options) {
-    const { comment, label, prefix, remove } = Object.assign({}, OPTIONS, options)
-
-    if (!(comment || label || prefix)) {
-        return {}
-    }
-
-    return {
-        visitor: {
-            FunctionDeclaration (path) {
-                const { node } = path
-
-                let returnStatement
-
-                if (hasSingleStatement(node)) {
-                    returnStatement = node.body.body[0]
-                } else {
-                    return
-                }
-
-                const { name } = node.id
-
-                let commentPath
-
-                if (prefix && name.startsWith(prefix)) {
-                    // do nothing
-                } else if (label && matchLabel(types, returnStatement, label)) {
-                    returnStatement = returnStatement.body
-                } else if (comment && (commentPath = findComment(node, comment))) {
-                    if (remove) {
-                        // remove the comment so it doesn't get attached to the
-                        // next declaration
-                        path.get(commentPath).remove()
-                    }
-                } else {
-                    return
-                }
-
-                path.parentPath.traverse(inlineFunctionVisitor, {
-                    name,
-                    params: node.params,
-                    returnStatement,
-                    types,
-                })
-
-                if (remove) {
-                    path.remove()
-                }
+          }
+              
+          // remove all cached functions from code
+          if (path.type === "Program") {
+            for (const id in functionCache) {
+              functionCache[id].node.remove();
             }
+          }
         }
+      },
+          
+      // add functions to cache after exiting
+      ArrowFunctionExpression: {
+        exit (path) {
+          // log the path in the console
+          // console.dir(path);
+          if (path.parent.type === "VariableDeclarator" &&
+              path.node.body.type !== "BlockStatement") {
+              
+            const functionName = path.parent.id.name;
+            const functionParams = path.node.params;
+            const returnExpression = path.node.body;
+    
+            functionCache[functionName] = {
+              params: functionParams,
+              expression: returnExpression,
+              node: path.parentPath,
+            }                
+          }
+        }
+      }
     }
+  };   
 }

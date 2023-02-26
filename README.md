@@ -1,9 +1,6 @@
-This is a forked repo, only changing the default prefix to inline all functions. I created it to use it in my teaching from the BABEL REPL online tool.
+# babel-plugin-inline-all-functions
 
-# babel-plugin-inline-functions
-
-[![Build Status](https://travis-ci.org/chocolateboy/babel-plugin-inline-functions.svg)](https://travis-ci.org/chocolateboy/babel-plugin-inline-functions)
-[![NPM Version](https://img.shields.io/npm/v/babel-plugin-inline-functions.svg)](https://www.npmjs.org/package/babel-plugin-inline-functions)
+[![NPM Version](https://img.shields.io/npm/v/babel-plugin-inline-all-functions.svg)](https://www.npmjs.org/package/babel-plugin-inline-all-functions)
 
 <!-- toc -->
 
@@ -12,14 +9,13 @@ This is a forked repo, only changing the default prefix to inline all functions.
 - [SYNOPSIS](#synopsis)
 - [DESCRIPTION](#description)
 - [OPTIONS](#options)
-  - [comment](#comment)
-  - [label](#label)
-  - [prefix](#prefix)
-  - [remove](#remove)
 - [USAGE](#usage)
+  - [.babelrc](#babelrc)
+  - [CLI](#cli)
+  - [API](#api)
 - [DEVELOPMENT](#development)
+  - [NPM Scripts](#npm-scripts)
 - [COMPATIBILITY](#compatibility)
-- [CAVEATS](#caveats)
 - [SEE ALSO](#see-also)
 - [VERSION](#version)
 - [AUTHOR](#author)
@@ -29,12 +25,12 @@ This is a forked repo, only changing the default prefix to inline all functions.
 
 # NAME
 
-babel-plugin-inline-functions - a Babel plugin to inline selected functions
+babel-plugin-inline-all-functions - a Babel plugin to inline one-liner arrow functions
 
 # INSTALLATION
 
 ```sh
-$ npm install babel-plugin-inline-functions
+$ npm install babel-plugin-inline-all-functions
 ```
 
 # SYNOPSIS
@@ -42,187 +38,32 @@ $ npm install babel-plugin-inline-functions
 `$ cat test.js`
 
 ```javascript
-function __INLINE__coalesce (value) {
-    return value ?? ''
-}
+const square = number => number ** 2;
 
-const foo = __INLINE__coalesce(options.foo)
+console.log(square(4) + square(8));
 ```
 
-`$ babel --plugins inline-functions test.js`
+`$ babel --plugins inline-all-functions test.js`
 
 ```javascript
-const foo = options.foo ?? ''
+console.log(4 ** 2 + 4 ** 2);
 ```
 
 # DESCRIPTION
 
 This is a [Babel](https://babeljs.io/)
-[plugin](https://babeljs.io/docs/plugins/) which inlines calls to selected
-functions within the scope in which the functions are declared. Only functions
-which contain a single return statement are inlined. Arguments passed to
-inlined functions are substituted for the corresponding parameters in the
-function body and (by default) the original function is removed.
+[plugin](https://babeljs.io/docs/plugins/) which inlines calls to one-liner
+arrow functions (these are arrow functions defined using an expression following
+the arrow, without a return keyword).
 
-Functions can be marked for inlining by using a custom prefix in the function
-name, a comment before the function declaration, or a label for the return
-statement in the function's body. By default, functions whose names begin with
-`"__INLINE__"` are inlined, but this can be modified or disabled via the
-plugin's options.
+I started by forking the inline-functions Babel plugin from @chocolateboy on
+GitHub then ended up re-writing most of the transformation to serve my goals as
+a Javascript teacher.
 
 # OPTIONS
 
-The following plugin options are supported.
-
-## comment
-
-- **Type**: `string | false`
-- **Default**: `false`
-
-Select functions for inlining by the presence of a block comment before the
-`function` keyword in the declaration. If set, the comment body is trimmed and
-compared to the option's value, and, if equal, the function is inlined. If set
-to false (as it is by default), function declaration comments are not checked.
-
-### Config
-
-```json
-{
-    "plugins": [
-        ["inline-functions", {
-            "comment": "inline"
-        }]
-    ]
-}
-```
-
-### Input
-
-```javascript
-/* inline */ function coalesce (value) {
-    return value ?? ''
-}
-
-const foo = coalesce(options.foo)
-```
-
-### Output
-
-```javascript
-const foo = options.foo ?? ''
-```
-
-## label
-
-- **Type**: `string | false`
-- **Default**: `false`
-
-Select functions for inlining by the presence of a label with this name before
-the return statement. If set to false (as it is by default), return statement
-labels are not checked.
-
-### Config
-
-```json
-{
-    "plugins": [
-        ["inline-functions", {
-            "label": "inline"
-        }]
-    ]
-}
-```
-
-### Input
-
-```javascript
-function coalesce (value) {
-    inline: return value ?? ''
-}
-
-const foo = coalesce(options.foo)
-```
-
-### Output
-
-```javascript
-const foo = options.foo ?? ''
-```
-
-## prefix
-
-- **Type**: `string | false`
-- **Default**: `"__INLINE__"`
-
-Select functions for inlining whose names start with the specified prefix. If
-set to false, function names are not checked.
-
-### Config
-
-```json
-{
-    "plugins": [
-        ["inline-functions", {
-            "prefix": "__inline__"
-        }]
-    ]
-}
-```
-
-### Input
-
-```javascript
-function __inline__coalesce (value) {
-    return value ?? ''
-}
-
-const foo = __inline__coalesce(options.foo)
-```
-
-### Output
-
-```javascript
-const foo = options.foo ?? ''
-```
-
-## remove
-
-- **Type**: `boolean`
-- **Default**: `true`
-
-Remove the inlined function declaration. If set to false, the declaration is preserved.
-
-### Config
-
-```json
-{
-    "plugins": [
-        ["inline-functions", {
-            "remove": false
-        }]
-    ]
-}
-```
-
-### Input
-
-```javascript
-function __INLINE__coalesce (value) {
-    return value ?? ''
-}
-
-const foo = __INLINE__coalesce(options.foo)
-```
-
-### Output
-
-```javascript
-function __INLINE__coalesce (value) {
-    return value ?? ''
-}
-
-const foo = options.foo ?? ''
-```
+The original plugin by @chocolateboy had a number of options which I had removed.
+My rewrite does not support any options.
 
 # USAGE
 
@@ -234,21 +75,21 @@ const foo = options.foo ?? ''
 
 ```json
 {
-    "plugins": ["inline-functions"]
+    "plugins": ["inline-all-functions"]
 }
 ```
 
 ## CLI
 
 ```sh
-$ babel --plugins inline-functions script.js
+$ babel --plugins inline-all-functions script.js
 ```
 
 ## API
 
 ```javascript
 require('@babel/core').transform(code, {
-    plugins: ['inline-functions']
+    plugins: ['inline-all-functions']
 })
 ```
 
@@ -272,27 +113,20 @@ The following NPM scripts are available:
 - Babel 6+ (only Babel 7+ is tested/supported)
 - [Maintained node versions](https://github.com/nodejs/Release#release-schedule)
 
-# CAVEATS
-
-- inlining may bloat your code
-- inlining may not speed things up and may even slow things down<sup>1</sup>
-- only works with functions that have a single return statement and simple (i.e. non-destructuring) parameters: keep things simple
-
-<sup>1</sup> Particularly on v8, which may have a better idea of what should be
-inlined when, and the memory/speed tradeoffs, than the developer.
-
 # SEE ALSO
 
+- [babel-plugin-inline-functions]()
 - [babel-plugin-nofn](https://www.npmjs.com/package/babel-plugin-nofn) - convert some array-method calls to inline loops
 
 # VERSION
 
-1.0.1
+1.0.4
 
 # AUTHOR
 
 - [Emile Cantin](https://github.com/emilecantin)
-- [chocolateboy](https://github.com/chocolateboy) - maintainer
+- [chocolateboy](https://github.com/chocolateboy)
+- [diraneyya](https://github.com/diraneyya) - MAINTAINER
 
 # COPYRIGHT AND LICENSE
 

@@ -1,11 +1,14 @@
 {
     "name": "babel-plugin-inline-all-functions",
-    "version": "1.0.2",
+    "version": "1.0.4",
     "description": "A Babel plugin to inline all functions",
     "main": "index.js",
     "repository": "diraneyya/babel-plugin-inline-all-functions",
     "author": "Emile Cantin",
-    "contributors": "chocolateboy <chocolate@cpan.org>",
+    "contributors": [
+        "chocolateboy <chocolate@cpan.org>",
+        "diraneyya <orwa.diraneyya@wildcodeschool.com>"
+    ],
     "license": "ISC",
     "scripts": {
         "doctoc": "markdown-toc --maxdepth 2 --bullets=- -i README.md",
